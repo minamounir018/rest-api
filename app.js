@@ -40,13 +40,13 @@ app.use((req, res, next) => {
 
 });
 
-app.use('/orders',() => OrdersRoutes);
-app.use('/products',() => prouductRoutes);
-app.use('/newproducts',() => NewProuduct);
-app.use('/contactus',() => ContactUs);
+app.use('/orders', OrdersRoutes);
+app.use('/products', prouductRoutes);
+app.use('/newproducts', NewProuduct);
+app.use('/contactus', ContactUs);
 
 app.use((req, res, next) => {
-    const error= new Error('not found');
+    const error= new Error('Error not found');
     error.status=404;
     next(error);
 });
