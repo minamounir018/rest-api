@@ -10,6 +10,9 @@ const mongoose = require('mongoose');
 const productRoutes =require('./api/routes/products');
 const OrdersRoutes =require('./api/routes/Orders');
 const NewProduct =require('./api/routes/NewProducts');
+const DecorProduct =require('./api/routes/DecorProducts');
+const BathProduct =require('./api/routes/BathProducts');
+const GiftProduct =require('./api/routes/GiftProducts');
 const ContactUs =require('./api/routes/ContactUs');
 
 mongoose.connect(
@@ -43,6 +46,9 @@ app.use((req, res, next) => {
 app.use('/orders', OrdersRoutes);
 app.use('/products', productRoutes);
 app.use('/newproducts', NewProduct);
+app.use('/decorproducts', DecorProduct);
+app.use('/bathproducts', BathProduct);
+app.use('/giftproducts', GiftProduct);
 app.use('/contactus', ContactUs);
 
 app.use((req, res, next) => {
