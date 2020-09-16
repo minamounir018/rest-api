@@ -46,14 +46,14 @@ router.get('/',(req, res, next) =>{
     });
 });
 
-router.post('/', upload.single('productImage'), (req, res, next) =>{
+router.post('/', upload.array('productImage', 5), (req, res, next) =>{
     
     const product = new NewProduct({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
         desc: req.body.desc,
         price: req.body.price,
-        productImage: req.file.path
+        productImage: req.files
     });
     product.save().then(result =>{
         console.log(result);
