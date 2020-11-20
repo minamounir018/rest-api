@@ -13,6 +13,7 @@ const NewProduct =require('./api/routes/NewProducts');
 const DecorProduct =require('./api/routes/DecorProducts');
 const BathProduct =require('./api/routes/BathProducts');
 const GiftProduct =require('./api/routes/GiftProducts');
+const JewelleryProduct =require('./api/routes/JewelleryProducts');
 const ContactUs =require('./api/routes/ContactUs');
 
 mongoose.connect(
@@ -48,6 +49,7 @@ app.use('/products', productRoutes);
 app.use('/newproducts', NewProduct);
 app.use('/decorproducts', DecorProduct);
 app.use('/bathproducts', BathProduct);
+app.use('/jewelleryproducts', JewelleryProduct);
 app.use('/giftproducts', GiftProduct);
 app.use('/contactus', ContactUs);
 

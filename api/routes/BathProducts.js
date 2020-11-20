@@ -34,7 +34,7 @@ const BathProduct = require('../models/BathProduct');
 
 router.get('/',(req, res, next) =>{
     BathProduct.find()
-    .select('name desc price _id productImage')
+    .select('name desc price filter _id productImage')
     .exec()
     .then(docs => {
         console.log(docs);
@@ -52,6 +52,7 @@ router.post('/', upload.array('productImage', 5), (req, res, next) =>{
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
         desc: req.body.desc,
+        filter: req.body.filter,
         price: req.body.price,
         productImage: req.files
     });
@@ -71,7 +72,7 @@ router.post('/', upload.array('productImage', 5), (req, res, next) =>{
 router.get('/:bathproductId', (req, res, next) =>{
     const id= req.params.bathproductId;
     BathProduct.findById(id)
-    .select('name price desc _id productImage')
+    .select('name price desc filter _id productImage')
     .exec()
     .then(doc => {
         console.log("From database", doc);
