@@ -30,10 +30,10 @@ const upload = multer({storage: storage,
      fileFilter:fileFilter
 });
 
-const JewelleryProduct = require('../models/JewelleryProduct');
+const BestSellersProduct = require('../models/BestSeller');
 
 router.get('/',(req, res, next) =>{
-    JewelleryProduct.find()
+    BestSellersProduct.find()
     .select('name desc filter price _id productImage')
     .exec()
     .then(docs => {
@@ -48,7 +48,7 @@ router.get('/',(req, res, next) =>{
 
 router.post('/', upload.array('productImage', 5), (req, res, next) =>{
     
-    const product = new JewelleryProduct({
+    const product = new BestSellersProduct({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
         desc: req.body.desc,
@@ -69,9 +69,9 @@ router.post('/', upload.array('productImage', 5), (req, res, next) =>{
 });
 
 
-router.get('/:jewelleryproductId', (req, res, next) =>{
-    const id= req.params.jewelleryproductId;
-    NewProduct.findById(id)
+router.get('/:bestsellersproductId', (req, res, next) =>{
+    const id= req.params.bestsellersproductId;
+    BestSellersProduct.findById(id)
     .select('name price filter desc _id productImage')
     .exec()
     .then(doc => {
@@ -89,13 +89,13 @@ router.get('/:jewelleryproductId', (req, res, next) =>{
     });
 });
 
-router.patch('/:jewelleryproductId',(req, res, next) =>{
-    const id = req.params.jewelleryproductId;
+router.patch('/:bestsellersproductId',(req, res, next) =>{
+    const id = req.params.bestsellersproductId;
     const updateOps = {};
     for (const ops of req.body){
         updateOps[ops.propName] = ops.value;
     }
-    JewelleryProduct.update({_id: id}, { $set: updateOps })
+    BestSellersProduct.update({_id: id}, { $set: updateOps })
     .exec()
     .then( result => {
         console.log(result);
@@ -108,9 +108,9 @@ router.patch('/:jewelleryproductId',(req, res, next) =>{
 });
 
 
-router.delete('/:jewelleryproductId',(req, res, next) =>{
-    const id = req.params.jewelleryproductId;
-    JewelleryProduct.remove({_id: id})
+router.delete('/:bestsellersproductId',(req, res, next) =>{
+    const id = req.params.bestsellersproductId;
+    BestSellersProduct.remove({_id: id})
     .exec()
     .then(result => {
         res.status(200).json(result);

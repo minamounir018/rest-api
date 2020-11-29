@@ -7,13 +7,16 @@ const bodyParser = require('body-parser');
 
 const mongoose = require('mongoose');
 
-const productRoutes =require('./api/routes/products');
-const OrdersRoutes =require('./api/routes/Orders');
 const NewProduct =require('./api/routes/NewProducts');
-const DecorProduct =require('./api/routes/DecorProducts');
+const DiningProduct =require('./api/routes/DiningProduct');
+const KitchenProduct =require('./api/routes/KitchenProducts');
+const BestSellers =require('./api/routes/BestSellers');
+const Offers =require('./api/routes/Offers');
+const OfficeProduct =require('./api/routes/OfficeProducts');
 const BathProduct =require('./api/routes/BathProducts');
 const GiftProduct =require('./api/routes/GiftProducts');
-const JewelleryProduct =require('./api/routes/JewelleryProducts');
+const VanityProduct =require('./api/routes/VanityProducts');
+const RareProduct =require('./api/routes/RareProducts');
 const ContactUs =require('./api/routes/ContactUs');
 
 mongoose.connect(
@@ -44,13 +47,18 @@ app.use((req, res, next) => {
 
 });
 
-app.use('/orders', OrdersRoutes);
-app.use('/products', productRoutes);
+
 app.use('/newproducts', NewProduct);
-app.use('/decorproducts', DecorProduct);
+app.use('/diningproducts', DiningProduct);
+app.use('/kitchenproducts', KitchenProduct);
+app.use('/officeproducts', OfficeProduct);
 app.use('/bathproducts', BathProduct);
-app.use('/jewelleryproducts', JewelleryProduct);
+app.use('/rareProducts', RareProduct);
+app.use('/vanityproducts', VanityProduct);
 app.use('/giftproducts', GiftProduct);
+app.use('/bestsellersproducts', BestSellers);
+app.use('/offerproducts', Offers);
+
 app.use('/contactus', ContactUs);
 
 app.use((req, res, next) => {

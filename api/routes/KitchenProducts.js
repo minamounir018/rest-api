@@ -30,11 +30,11 @@ const upload = multer({storage: storage,
      fileFilter:fileFilter
 });
 
-const DecorProduct = require('../models/DecorProduct');
+const KitchenProduct = require('../models/KitchenProduct');
 
 router.get('/',(req, res, next) =>{
-    DecorProduct.find()
-    .select('name desc price filter _id productImage')
+    KitchenProduct.find()
+    .select('name desc filter price _id productImage')
     .exec()
     .then(docs => {
         console.log(docs);
@@ -48,7 +48,7 @@ router.get('/',(req, res, next) =>{
 
 router.post('/', upload.array('productImage', 5), (req, res, next) =>{
     
-    const product = new DecorProduct({
+    const product = new KitchenProduct({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
         desc: req.body.desc,
@@ -69,10 +69,10 @@ router.post('/', upload.array('productImage', 5), (req, res, next) =>{
 });
 
 
-router.get('/:decorproductId', (req, res, next) =>{
-    const id= req.params.decorproductId;
-    DecorProduct.findById(id)
-    .select('name price desc filter _id productImage')
+router.get('/:kitchenproductId', (req, res, next) =>{
+    const id= req.params.kitchenproductId;
+    KitchenProduct.findById(id)
+    .select('name price filter desc _id productImage')
     .exec()
     .then(doc => {
         console.log("From database", doc);
@@ -89,13 +89,13 @@ router.get('/:decorproductId', (req, res, next) =>{
     });
 });
 
-router.patch('/:decorproductId',(req, res, next) =>{
-    const id = req.params.decorproductId;
+router.patch('/:kitchenproductId',(req, res, next) =>{
+    const id = req.params.kitchenproductId;
     const updateOps = {};
     for (const ops of req.body){
         updateOps[ops.propName] = ops.value;
     }
-    DecorProduct.update({_id: id}, { $set: updateOps })
+    KitchenProduct.update({_id: id}, { $set: updateOps })
     .exec()
     .then( result => {
         console.log(result);
@@ -108,9 +108,9 @@ router.patch('/:decorproductId',(req, res, next) =>{
 });
 
 
-router.delete('/:decorproductId',(req, res, next) =>{
-    const id = req.params.decorproductId;
-    DecorProduct.remove({_id: id})
+router.delete('/:kitchenproductId',(req, res, next) =>{
+    const id = req.params.kitchenproductId;
+    KitchenProduct.remove({_id: id})
     .exec()
     .then(result => {
         res.status(200).json(result);

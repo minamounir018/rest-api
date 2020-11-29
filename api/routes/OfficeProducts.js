@@ -4,6 +4,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 
 const multer = require('multer');
+
 const storage =multer.diskStorage({
     destination: function(req, file, cb){
         cb(null, './uploads/');
@@ -29,11 +30,11 @@ const upload = multer({storage: storage,
      fileFilter:fileFilter
 });
 
-const Product =require('../models/product');
+const OfficeProduct = require('../models/OfficeProduct');
 
 router.get('/',(req, res, next) =>{
-    Product.find()
-    .select('name price _id productImage')
+    OfficeProduct.find()
+    .select('name desc price filter _id productImage')
     .exec()
     .then(docs => {
         console.log(docs);
@@ -45,12 +46,15 @@ router.get('/',(req, res, next) =>{
     });
 });
 
-router.post('/', upload.single('productImage'), (req, res, next) =>{
-    const product = new Product({
+router.post('/', upload.array('productImage', 5), (req, res, next) =>{
+    
+    const product = new OfficeProduct({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
+        desc: req.body.desc,
+        filter: req.body.filter,
         price: req.body.price,
-        productImage: req.file.path
+        productImage: req.files
     });
     product.save().then(result =>{
         console.log(result);
@@ -65,10 +69,10 @@ router.post('/', upload.single('productImage'), (req, res, next) =>{
 });
 
 
-router.get('/:productId', (req, res, next) =>{
-    const id= req.params.productId;
-    Product.findById(id)
-    .select('name price _id productImage')
+router.get('/:officeproductId', (req, res, next) =>{
+    const id= req.params.officeproductId;
+    OfficeProduct.findById(id)
+    .select('name price desc filter _id productImage')
     .exec()
     .then(doc => {
         console.log("From database", doc);
@@ -85,13 +89,13 @@ router.get('/:productId', (req, res, next) =>{
     });
 });
 
-router.patch('/:productId',(req, res, next) =>{
-    const id = req.params.productId;
+router.patch('/:officeproductId',(req, res, next) =>{
+    const id = req.params.officeproductId;
     const updateOps = {};
     for (const ops of req.body){
-        updateOps[ops.propName]= ops.value;
+        updateOps[ops.propName] = ops.value;
     }
-    Product.update({_id: id}, { $set: updateOps })
+    OfficeProduct.update({_id: id}, { $set: updateOps })
     .exec()
     .then( result => {
         console.log(result);
@@ -101,13 +105,12 @@ router.patch('/:productId',(req, res, next) =>{
         console.log(err);
         res.status(500).json({error:err});
     });
-       
 });
 
 
-router.delete('/:productId',(req, res, next) =>{
-    const id = req.params.productId;
-    Product.remove({_id: id})
+router.delete('/:officeproductId',(req, res, next) =>{
+    const id = req.params.officeproductId;
+    OfficeProduct.remove({_id: id})
     .exec()
     .then(result => {
         res.status(200).json(result);
